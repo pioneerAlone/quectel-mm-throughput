@@ -1,0 +1,23 @@
+# SPDX-License-Identifier: GPL-2.0+
+#
+# 99-qmiquectel-throughput.rules — udev rules to trigger throughput tuning.
+#
+# Install to /etc/udev/rules.d/99-qmiquectel-throughput.rules
+#
+# This template triggers mmcli.sh when a Quectel modem is added to the system.
+# The VID/PID placeholder must be filled in based on the target module family.
+#
+# To find the correct VID/PID, run `lsusb` after plugging in the module and
+# match the Quectel vendor ID (0x2c7c) against your specific product ID.
+
+# Example for Quectel EG25-G: VID=0x2c7c, PID=0x0125
+# Replace PID with the actual product ID of your module.
+ACTION=="add", SUBSYSTEM=="usb", ATTR{idVendor}=="2c7c", ATTR{idProduct}=="0125", \
+    RUN+="/usr/local/bin/qmiquectel-throughput-trigger.sh"
+
+# Add additional ATTR{idProduct} matches for other Quectel modules here.
+# Common Quectel product IDs:
+#   0x0125  EG25-G
+#   0x0126  EG21-G
+#   0x0306  EM060K
+#   0x0455  RG500Q

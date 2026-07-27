@@ -1,0 +1,64 @@
+# SPDX-License-Identifier: GPL-2.0+
+name: upstream-compat
+
+on:
+  schedule:
+    # Every Monday 06:00 UTC
+    - cron: '0 6 * * 1'
+  workflow_dispatch:
+  push:
+    paths:
+      - 'patches/**'
+      - 'SUPPORTED.md'
+      - '.github/workflows/upstream-compat.yml'
+
+jobs:
+  test-patches:
+    name: Apply patches on ${{ matrix.version }}
+    runs-on: ubuntu-latest
+
+    strategy:
+      fail-fast: false
+      matrix:
+        version:
+          - '1.22.0'
+          - '1.24.0'
+
+    steps:
+      - name: Checkout this repo
+        uses: actions/checkout@v4
+
+      - name: Clone upstream ModemManager
+        run: |
+          git clone --depth 1 --branch ${{ matrix.version }} \
+            https://github.com/linux-mobile-broadband/ModemManager.git \
+            upstream
+
+      - name: Apply patches
+        working-directory: upstream
+        run: |
+          set -e
+          for p in ../patches/${{ matrix.version }}/*.patch; do
+            echo "==> Checking $p"
+            git apply --check "$p"
+          done
+
+      - name: Apply and verify anchor
+        working-directory: upstream
+        run: |
+          for p in ../patches/${{ matrix.version }}/*.patch; do
+            git apply "$p"
+          done
+          count=$(grep -rc QUECTEL_THROUGHPUT_ANCHOR src/mm-port-qmi.c || echo 0)
+          if [ "$count" -ne 1 ]; then
+            echo "FAIL: anchor count is $count, expected 1"
+            exit 1
+          fi
+          echo "Anchor count OK"
+
+      - name: Upload build log on failure
+        if: failure()
+        uses: actions/upload-artifact@v4
+        with:
+          name: upstream-compat-${{ matrix.version }}-log
+          path: upstream/build/

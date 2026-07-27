@@ -1,0 +1,16 @@
+{
+  "mm_version": "1.22.0",
+  "upstream_repo": "linux-mobile-broadband/ModemManager",
+  "upstream_canonical": "https://gitlab.freedesktop.org/mobile-broadband/ModemManager",
+  "ref": "1.22.0",
+  "commit": "03f786ce66360d67c669f4f122f8aa458e6f01ea",
+  "files_touched": ["src/mm-port-qmi.c"],
+  "patch_files": ["01-anchor.patch", "02-ul-agg.patch"],
+  "apply_order": [
+    "01-anchor.patch",
+    "02-ul-agg.patch"
+  ],
+  "tested_at": "2026-07-27",
+  "tested_by": "bakewell",
+  "notes": "Initial verified baseline. Both patches apply cleanly to a fresh clone of upstream tag 1.22.0 at the locked commit. Anchor appears exactly once after apply."
+}

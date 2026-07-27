@@ -1,0 +1,12 @@
+# TODO: rebase UL AGG patch against MM 1.24.0
+#
+# Steps:
+# 1. cd /tmp && git clone --depth 1 --branch 1.24.0 \
+#      https://github.com/linux-mobile-broadband/ModemManager.git mm-1240
+# 2. cd mm-1240
+# 3. git apply ../quectel-mm-throughput/patches/1.24.0/01-anchor.patch
+# 4. Edit src/mm-port-qmi.c to insert the 2 UL AGG lines after the QUECTEL_THROUGHPUT_ANCHOR comment
+#    (refer to patches/1.22.0/02-ul-agg.patch for the exact lines)
+# 5. git diff src/mm-port-qmi.c > ../quectel-mm-throughput/patches/1.24.0/02-ul-agg.patch
+# 6. Update source.json: set tested_at, tested_by, notes
+# 7. Run scripts/verify-anchor.sh to validate

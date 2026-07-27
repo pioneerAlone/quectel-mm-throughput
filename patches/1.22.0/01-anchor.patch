@@ -1,0 +1,17 @@
+diff --git a/src/mm-port-qmi.c b/src/mm-port-qmi.c
+index 4d79a43..7f22eb9 100644
+--- a/src/mm-port-qmi.c
++++ b/src/mm-port-qmi.c
+@@ -1536,6 +1536,12 @@ sync_wda_data_format (GTask *task)
+         else
+             qmi_message_wda_set_data_format_input_set_downlink_data_aggregation_max_size (input, DEFAULT_DOWNLINK_DATA_AGGREGATION_MAX_SIZE, NULL);
+         qmi_message_wda_set_data_format_input_set_downlink_data_aggregation_max_datagrams (input, DEFAULT_DOWNLINK_DATA_AGGREGATION_MAX_DATAGRAMS, NULL);
++        /* QUECTEL_THROUGHPUT_ANCHOR
++         *   Uplink aggregation applied here.
++         *   See https://github.com/pioneerAlone/quectel-mm-throughput
++         *   Do NOT delete this comment unless you also remove
++         *   the matching UL AGG lines.
++         */
+     }
+     if (ctx->use_endpoint)
+         qmi_message_wda_set_data_format_input_set_endpoint_info (input, self->priv->endpoint_type, self->priv->endpoint_interface_number, NULL);

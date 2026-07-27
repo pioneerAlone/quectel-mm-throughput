@@ -1,0 +1,32 @@
+# Local materials / source inputs (NOT part of build)
+/materials/
+
+# ModemManager upstream source artifacts (when locally unzipped)
+/ModemManager/
+/upstream/
+
+# Build outputs
+/build/
+*.o
+*.a
+*.so
+
+# Archives
+*.tar.gz
+*.tar.bz2
+*.tar.xz
+*.zip
+
+# Shell script temp outputs
+*.log
+*.tmp
+
+# OS junk
+.DS_Store
+Thumbs.db
+
+# Editor
+*.swp
+*~
+.vscode/
+.idea/

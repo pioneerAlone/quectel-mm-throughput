@@ -1,0 +1,9 @@
+bearer.0.path = /org/freedesktop/ModemManager1/Bearer/0
+bearer.0.properties.apn = 3gnet
+bearer.0.properties.connected = yes
+bearer.0.properties.interface = qmapmux0
+bearer.0.properties.ipv4.address = 10.0.0.100
+bearer.0.properties.ipv4.prefix = 24
+bearer.0.properties.ipv4.gateway = 10.0.0.1
+bearer.0.properties.ipv4.dns = 8.8.8.8,8.8.4.4
+bearer.0.properties.ipv4.mtu = 1500

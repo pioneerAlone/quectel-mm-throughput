@@ -1,0 +1,34 @@
+# SPDX-License-Identifier: GPL-2.0+
+#
+# qmiquectel-throughput.service — oneshot unit to apply throughput tuning.
+#
+# Install:
+#   cp runtime/systemd/qmiquectel-throughput.service /etc/systemd/system/
+#   systemctl daemon-reload
+#
+# Enable (manual start):
+#   systemctl start qmiquectel-throughput.service
+#
+# This unit is INTENTIONALLY a oneshot — it should not run continuously.
+# For automatic triggering on modem add, see runtime/udev/99-qmiquectel-throughput.rules
+# instead of using a systemd path unit.
+
+[Unit]
+Description=Quectel + ModemManager throughput tuning
+Documentation=https://github.com/pioneerAlone/quectel-mm-throughput
+After=ModemManager.service
+Requires=ModemManager.service
+
+[Service]
+Type=oneshot
+RemainAfterExit=no
+ExecStart=/usr/local/bin/qmiquectel-throughput.sh
+StandardOutput=journal
+StandardError=journal
+
+# Hardening
+NoNewPrivileges=yes
+PrivateTmp=yes
+
+[Install]
+WantedBy=multi-user.target

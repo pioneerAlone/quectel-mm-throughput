@@ -1,0 +1,13 @@
+diff --git a/src/mm-port-qmi.c b/src/mm-port-qmi.c
+index 7f22eb9..fd0b820 100644
+--- a/src/mm-port-qmi.c
++++ b/src/mm-port-qmi.c
+@@ -1542,6 +1542,8 @@ sync_wda_data_format (GTask *task)
+          *   Do NOT delete this comment unless you also remove
+          *   the matching UL AGG lines.
+          */
++        qmi_message_wda_set_data_format_input_set_uplink_data_aggregation_max_size (input, 4096, NULL);
++        qmi_message_wda_set_data_format_input_set_uplink_data_aggregation_max_datagrams (input, 11, NULL);
+     }
+     if (ctx->use_endpoint)
+         qmi_message_wda_set_data_format_input_set_endpoint_info (input, self->priv->endpoint_type, self->priv->endpoint_interface_number, NULL);

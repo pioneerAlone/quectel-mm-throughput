@@ -1,0 +1,5 @@
+modem.0.path = /org/freedesktop/ModemManager1/Modem/0
+modem.0.device = /org/freedesktop/ModemManager1/Simcard/0
+modem.0.generic.equipment-identifier = 866123456789012
+modem.0.generic.manufacturer = Quectel
+modem.0.generic.model = EG25-G

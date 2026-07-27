@@ -1,0 +1,10 @@
+diff --git a/src/mm-port-qmi.c b/src/mm-port-qmi.c
+@@ ... @@ sync_wda_data_format (GTask *task)
+         qmi_message_wda_set_data_format_input_set_downlink_data_aggregation_max_datagrams (input, DEFAULT_DOWNLINK_DATA_AGGREGATION_MAX_DATAGRAMS, NULL);
++        /* QUECTEL_THROUGHPUT_ANCHOR
++         *   Uplink aggregation applied here.
++         *   See https://github.com/pioneerAlone/quectel-mm-throughput
++         *   Do NOT delete this comment unless you also remove
++         *   the matching UL AGG lines.
++         */
+     }

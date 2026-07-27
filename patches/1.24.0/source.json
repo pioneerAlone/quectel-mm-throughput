@@ -1,0 +1,16 @@
+{
+  "mm_version": "1.24.0",
+  "upstream_repo": "linux-mobile-broadband/ModemManager",
+  "upstream_canonical": "https://gitlab.freedesktop.org/mobile-broadband/ModemManager",
+  "ref": "1.24.0",
+  "commit": "dfa41adf391b090720fb1ea56d884f61ea7fba29",
+  "files_touched": ["src/mm-port-qmi.c"],
+  "patch_files": ["01-anchor.patch", "02-ul-agg.patch"],
+  "apply_order": [
+    "01-anchor.patch",
+    "02-ul-agg.patch"
+  ],
+  "tested_at": "",
+  "tested_by": "",
+  "notes": "Placeholder. 01-anchor.patch contains a TODO skeleton; 02-ul-agg.patch is a rebase instruction file. To finalize: run scripts/bump-upstream.sh 1.24.0 (which pre-populates these), then manually rebase 02-ul-agg.patch against the locked commit and update tested_at / tested_by / notes."
+}
