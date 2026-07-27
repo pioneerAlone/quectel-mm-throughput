@@ -26,16 +26,40 @@ ModemManager 通过 QMI 协议控制 Quectel 模组（EG25、EG21、EM060、RG50
 git clone https://github.com/pioneerAlone/quectel-mm-throughput.git
 cd quectel-mm-throughput
 
-# 2. 应用 patch 到上游 MM 源码（假设 MM 1.22.0 已下载）
-git clone --depth 1 --branch 1.22.0 \
-  https://github.com/linux-mobile-broadband/ModemManager.git upstream
-cd upstream
-for p in ../patches/1.22.0/*.patch; do git apply "$p"; done
+# 2. 拉上游 MM 源码并自动应用补丁（推荐：scripts/apply-patches.sh）
+scripts/apply-patches.sh 1.22.0 ./upstream
+#   等价于：
+#   - clone linux-mobile-broadband/ModemManager @ 03f786ce...
+#   - 应用 patches/1.22.0/01-anchor.patch
+#   - 应用 patches/1.22.0/02-ul-agg.patch
+#   - 验证 anchor count == 1 + UL AGG 行存在
 
-# 3. 在设备上跑 runtime 脚本（设备侧）
+# 只想验证补丁能否 apply 而不修改文件？
+scripts/apply-patches.sh --check 1.22.0 ./upstream
+
+# 切换上游源到 GitLab canonical？
+scripts/apply-patches.sh --source gitlab 1.22.0 ./upstream
+
+# 3. 编译并安装（在你的 build 主机上）
+cd upstream && meson setup builddir && ninja -C builddir && sudo ninja -C builddir install
+
+# 4. 在目标设备上跑 runtime 脚本
 scp -r runtime/* user@device:/tmp/qmiquectel-throughput/
 ssh user@device 'sudo /tmp/qmiquectel-throughput/mmcli.sh'
 ```
+
+### `apply-patches.sh` 参数参考
+
+| 参数 | 默认 | 说明 |
+|------|------|------|
+| `<mm-version>` | `1.22.0`（或 `$MM_VERSION`） | 上游 ModemManager 版本 |
+| `<target-dir>` | `./upstream`（或 `$MM_TARGET_DIR`） | clone 目标目录 |
+| `--check` | off | 仅验证，不修改文件 |
+| `--clean` | off | 目标目录存在时先删除 |
+| `--source` | `github` | `github`（mirror）或 `gitlab`（canonical） |
+| `--version <v>` | — | 等价于位置参数 `<mm-version>` |
+
+支持 `MM_VERSION` / `MM_TARGET_DIR` / `MM_SOURCE` 环境变量。
 
 ## 仓库结构
 
